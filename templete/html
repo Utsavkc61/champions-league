@@ -2,12 +2,39 @@
 <html>
     <head>
         <title>Champions League</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Champions League</h1>
-        <link rel = "stylesheet" href = "style.css">
+        <div class="header">
+            <img src="logo.png" alt="Champions League Logo" class="logo">
+            <h1>Champions League</h1>
+        </div>
+        
+        <nav class="navbar">
+            <div class="navbar__container">
+                <div class="navbar__toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a href="/group.html" class="navbar__links">Group</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/standing.html" class="navbar__links">Standing</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/players.html" class="navbar__links">Players</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/matches.html" class="navbar__links">Matches</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-        <img id = "main" src = "images/main.jpg">
+        <img id="main" src="image.jpg">
         <h2>Description</h2>
         <p>
             Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
@@ -20,10 +47,6 @@
             lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel 
             class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
         </p>
+        <script src="app.js"></script>
     </body>
-
-
-
-
-
 </html>
