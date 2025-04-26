@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Champions League Groups</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .dropdown-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #003399;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .group-name {
+      font-size: 1.3em;
+      margin: 10px 0;
+      color: #003399;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>UEFA Champions League</h1>
+
+  <div class="dropdown-container">
+    <label for="groupSelect">Select Group: </label>
+    <select id="groupSelect">
+      <option value="A">Group A</option>
+      <option value="B">Group B</option>
+      <option value="C">Group C</option>
+    </select>
+  </div>
+
+  <div class="group-name" id="groupName">Group A</div>
+
+  <table id="groupTable">
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>P</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>GF</th>
+        <th>GA</th>
+        <th>GD</th>
+        <th>Pts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- JS injects data here -->
+    </tbody>
+  </table>
+
+  <script>
+    const groups = {
+      A: [
+        { name: "Bayern Munich", P: 6, W: 5, D: 1, L: 0, GF: 14, GA: 5 },
+        { name: "Manchester United", P: 6, W: 3, D: 1, L: 2, GF: 10, GA: 8 },
+        { name: "Galatasaray", P: 6, W: 1, D: 2, L: 3, GF: 6, GA: 9 },
+        { name: "Copenhagen", P: 6, W: 0, D: 2, L: 4, GF: 3, GA: 11 }
+      ],
+      B: [
+        { name: "Real Madrid", P: 6, W: 6, D: 0, L: 0, GF: 15, GA: 3 },
+        { name: "Napoli", P: 6, W: 4, D: 0, L: 2, GF: 10, GA: 6 },
+        { name: "Braga", P: 6, W: 1, D: 1, L: 4, GF: 4, GA: 9 },
+        { name: "Union Berlin", P: 6, W: 0, D: 1, L: 5, GF: 2, GA: 13 }
+      ],
+      C: [
+        { name: "Arsenal", P: 6, W: 4, D: 1, L: 1, GF: 12, GA: 4 },
+        { name: "PSV", P: 6, W: 3, D: 2, L: 1, GF: 8, GA: 5 },
+        { name: "Sevilla", P: 6, W: 1, D: 2, L: 3, GF: 6, GA: 9 },
+        { name: "Lens", P: 6, W: 1, D: 1, L: 4, GF: 4, GA: 10 }
+      ]
+    };
+
+    function calculate(team) {
+      team.GD = team.GF - team.GA;
+      team.Pts = team.W * 3 + team.D;
+      return team;
+    }
+
+    function loadGroup(groupKey) {
+      const teams = groups[groupKey].map(calculate);
+
+      // Sort by points, then GD, then GF
+      teams.sort((a, b) => {
+        if (b.Pts !== a.Pts) return b.Pts - a.Pts;
+        if (b.GD !== a.GD) return b.GD - a.GD;
+        return b.GF - a.GF;
+      });
+
+      const tbody = document.querySelector("#groupTable tbody");
+      tbody.innerHTML = "";
+
+      teams.forEach(team => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${team.name}</td>
+          <td>${team.P}</td>
+          <td>${team.W}</td>
+          <td>${team.D}</td>
+          <td>${team.L}</td>
+          <td>${team.GF}</td>
+          <td>${team.GA}</td>
+          <td>${team.GD}</td>
+          <td>${team.Pts}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById("groupName").textContent = "Group " + groupKey;
+    }
+
+    // Event listener for dropdown
+    document.getElementById("groupSelect").addEventListener("change", function () {
+      loadGroup(this.value);
+    });
+
+    // Load initial group
+    loadGroup("A");
+  </script>
+
+</body>
+</html>
