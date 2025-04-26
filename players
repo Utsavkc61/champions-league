@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Champions League Players</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003399;
+    }
+
+    .dropdown-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #003399;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .team-name {
+      font-size: 1.3em;
+      text-align: center;
+      color: #003399;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Champions League Players</h1>
+
+  <div class="dropdown-container">
+    <label for="teamSelect">Select Team:</label>
+    <select id="teamSelect">
+      <option value="all">All Teams</option>
+      <option value="Real Madrid">Real Madrid</option>
+      <option value="Man City">Man City</option>
+      <option value="Bayern Munich">Bayern Munich</option>
+      <option value="Arsenal">Arsenal</option>
+      <option value="Barcelona">Barcelona</option>
+    </select>
+  </div>
+
+  <table id="playerTable">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Goals</th>
+        <th>Assists</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const players = [
+      { name: "Vinícius Júnior", team: "Real Madrid", position: "Forward", goals: 4, assists: 3 },
+      { name: "Jude Bellingham", team: "Real Madrid", position: "Midfielder", goals: 6, assists: 2 },
+      { name: "Erling Haaland", team: "Man City", position: "Forward", goals: 10, assists: 1 },
+      { name: "Kevin De Bruyne", team: "Man City", position: "Midfielder", goals: 2, assists: 6 },
+      { name: "Harry Kane", team: "Bayern Munich", position: "Forward", goals: 7, assists: 2 },
+      { name: "Jamal Musiala", team: "Bayern Munich", position: "Midfielder", goals: 3, assists: 4 },
+      { name: "Bukayo Saka", team: "Arsenal", position: "Forward", goals: 5, assists: 5 },
+      { name: "Martin Ødegaard", team: "Arsenal", position: "Midfielder", goals: 2, assists: 3 },
+      { name: "Robert Lewandowski", team: "Barcelona", position: "Forward", goals: 4, assists: 1 },
+      { name: "Pedri", team: "Barcelona", position: "Midfielder", goals: 1, assists: 2 }
+    ];
+
+    const tableBody = document.querySelector("#playerTable tbody");
+    const teamSelect = document.getElementById("teamSelect");
+
+    function loadPlayers(filterTeam) {
+      tableBody.innerHTML = "";
+      const filtered = filterTeam === "all" ? players : players.filter(p => p.team === filterTeam);
+
+      filtered.forEach(player => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${player.name}</td>
+          <td>${player.team}</td>
+          <td>${player.position}</td>
+          <td>${player.goals}</td>
+          <td>${player.assists}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    teamSelect.addEventListener("change", () => {
+      loadPlayers(teamSelect.value);
+    });
+
+    loadPlayers("all"); // Load all players on page load
+  </script>
+
+</body>
+</html>
